@@ -81,8 +81,8 @@ public class Main{
 			for(int i = 0; i<aux.length; i++) palavras.add(new Palavra(aux[i]));
 			for(Palavra i : palavras) {
 				Character letrainicial = i.getPalavra().charAt(0);
-				if(luis.containsKey(letrainicial)) { //já iniciei a lista de palavras dessa letra
-					if(luis.get(letrainicial).contains(i)) { //já adicionei uma palavra igual na lista dessa letra
+				if(luis.containsKey(letrainicial)) { //jÃ¡ iniciei a lista de palavras dessa letra
+					if(luis.get(letrainicial).contains(i)) { //jÃ¡ adicionei uma palavra igual na lista dessa letra
 						
 						int index = luis.get(letrainicial).indexOf(i);
 						int tamanho = luis.get(letrainicial).get(index).getTamanho() + i.getTamanho();
@@ -90,9 +90,9 @@ public class Main{
 						
 					}
 					
-					else luis.get(letrainicial).add(i); //ainda não add essa palavra na lista dessa letra
+					else luis.get(letrainicial).add(i); //ainda nÃ£o add essa palavra na lista dessa letra
 				}
-				else if(i.getTamanho() > 0){ //ainda não criei a lista dessa letra
+				else if(i.getTamanho() > 0){ //ainda nÃ£o criei a lista dessa letra
 					luis.put(letrainicial, new LinkedList<Palavra>());
 					luis.get(letrainicial).add(i);
 				}
