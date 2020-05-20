@@ -1,8 +1,6 @@
 package Principal;
 
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.*;
 
 /*
@@ -56,89 +54,72 @@ class Palavra implements Comparable<Palavra>{
 
 public class Main{
 	public static void main(String[] args) throws IOException {
-		Map<Character, LinkedList<Palavra>> luis;
+		Map<Character, LinkedList<Palavra>> dicionario;
 		
 		List<Palavra> palavras;
-		
+
 		Scanner sc = new Scanner(System.in);
 		String frase;
-		String aux [];
-	    
-//	    gravarArq.println("io");
-//	    gravarArq.println("io");
-//	    gravarArq.println("io");
-//	    
-//	    gravarArq.close();
-	    
-	    
-		
+		String aux [];		
 		
 		while(sc.hasNext() && !(frase = sc.nextLine()).equals(".")) {
-			luis = new HashMap<Character, LinkedList<Palavra>>();
+			dicionario = new HashMap<Character, LinkedList<Palavra>>();
 			palavras = new LinkedList<Palavra>();
 			String frasefinal = "";
 			aux = frase.split(" ");
 			for(int i = 0; i<aux.length; i++) palavras.add(new Palavra(aux[i]));
 			for(Palavra i : palavras) {
 				Character letrainicial = i.getPalavra().charAt(0);
-				if(luis.containsKey(letrainicial)) { //já iniciei a lista de palavras dessa letra
-					if(luis.get(letrainicial).contains(i)) { //já adicionei uma palavra igual na lista dessa letra
+				if(dicionario.containsKey(letrainicial)) { //já iniciei a lista de palavras dessa letra
+					if(dicionario.get(letrainicial).contains(i)) { //já adicionei uma palavra igual na lista dessa letra
 						
-						int index = luis.get(letrainicial).indexOf(i);
-						int tamanho = luis.get(letrainicial).get(index).getTamanho() + i.getTamanho();
-						luis.get(letrainicial).get(index).setTamanho(tamanho);
+						int index = dicionario.get(letrainicial).indexOf(i);
+						int tamanho = dicionario.get(letrainicial).get(index).getTamanho() + i.getTamanho();
+						dicionario.get(letrainicial).get(index).setTamanho(tamanho);
 						
 					}
 					
-					else luis.get(letrainicial).add(i); //ainda não add essa palavra na lista dessa letra
+					else dicionario.get(letrainicial).add(i); //ainda não add essa palavra na lista dessa letra
 				}
 				else if(i.getTamanho() > 0){ //ainda não criei a lista dessa letra
-					luis.put(letrainicial, new LinkedList<Palavra>());
-					luis.get(letrainicial).add(i);
+					dicionario.put(letrainicial, new LinkedList<Palavra>());
+					dicionario.get(letrainicial).add(i);
 				}
 			}
 			
-			SortedSet<Character> listadevalores = new TreeSet<>(luis.keySet());
+			SortedSet<Character> listadecaracteres = new TreeSet<>(dicionario.keySet());
 			
-			
-			for(Character i : listadevalores) {
-				Collections.sort(luis.get(i));
-			}
+			for(Character i : listadecaracteres) Collections.sort(dicionario.get(i));
 			
 			for(Palavra i : palavras) {
 				String palavra = i.getPalavra();
 				int tamanho = i.getTamanho();
+				
 				if(frasefinal != "") {
-					if(tamanho > 0 && luis.get(palavra.charAt(0)).getFirst().getPalavra().equals(palavra)  ) {
+					if(tamanho > 0 && dicionario.get(palavra.charAt(0)).getFirst().getPalavra().equals(palavra)  ) {
 						frasefinal += " " + palavra.substring(0, 1) + ".";
 					}
 					else frasefinal += " " + palavra;
 				}
+				
 				else {
-					if(tamanho > 0 && luis.get(palavra.charAt(0)).getFirst().getPalavra().equals(palavra)  ) {
+					if(tamanho > 0 && dicionario.get(palavra.charAt(0)).getFirst().getPalavra().equals(palavra)  ) {
 						frasefinal += palavra.substring(0, 1) + ".";
 					}
 					else frasefinal += palavra;
 				}
 			}
-			
-
-			
+					
 		    System.out.println(frasefinal);
 
-		    System.out.println(listadevalores.size());
+		    System.out.println(listadecaracteres.size());
 		    
-			//System.out.println(frasefinal);
-			//System.out.println(listadevalores.size());
-			for(Character i : listadevalores) {
-				String f = luis.get(i).getFirst().getPalavra();
+			for(Character i : listadecaracteres) {
+				String f = dicionario.get(i).getFirst().getPalavra();
 
 				System.out.println(f.charAt(0) + "." + " = " + f);
-				
-				//System.out.println(f.charAt(0) + "." + " = " + f);
-			
 			}
-		}	
-	
+		}
+		sc.close();
 	}
 }
